@@ -41,7 +41,7 @@ class PesertaController extends Controller
 
         try {
             // Menyimpan file dokumen
-            $filePath = $request->file('file_dokumen')->store('documents');
+            $filePath = $request->file('file_dokumen')->store('documents', 'public');
 
             Peserta::create([
                 'nama' => $request->nama,
@@ -63,7 +63,8 @@ class PesertaController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $peserta = Peserta::findOrFail($id);
+        return view('admin.show-peserta', compact('peserta'));
     }
 
     /**
@@ -71,7 +72,8 @@ class PesertaController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $peserta = Peserta::findOrFail($id);
+        return view('admin.edit-peserta', compact('peserta'));
     }
 
     /**
@@ -79,7 +81,41 @@ class PesertaController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'nama' => 'required|string|max:64',
+            'ttl' => 'required|string|max:64',
+            'sekolah' => 'required|string|max:64',
+            'jurusan' => 'required|string|max:64',
+            'file_dokumen' => 'nullable|file|mimes:pdf,doc,docx,png|max:2048',
+            'nomor_sertifikat' => 'required|string|max:32|unique:pesertas,nomor_sertifikat,' . $id,
+        ]);
+        
+        try {
+            $peserta = Peserta::findOrFail($id);
+
+            if ($request->hasFile('file_dokumen')) {
+                // Hapus Dokumen lama jika ada
+                if ($peserta->file_dokumen) {
+                    Storage::disk('public')->delete($peserta->file_dokumen);
+                }
+
+                // Simpan File Dokumen Baru
+                $filePath = $request->file('file_dokumen')->store('documents', 'public');
+                $peserta->file_dokumen = $filePath;
+            }
+
+            $peserta->update([
+                'nama' => $request->nama,
+                'ttl' => $request->ttl,
+                'sekolah' => $request->sekolah,
+                'jurusan' => $request->jurusan,
+                'nomor_sertifikat' => $request->nomor_sertifikat,
+            ]);
+
+            return redirect()->route('pesertas.show', $peserta->id )->with('success', 'Peserta berhasil diupdate');
+        } catch (\Exception $e) {
+            return redirect()->route('pesertas.edit')->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
+        }
     }
 
     /**
@@ -87,6 +123,19 @@ class PesertaController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        try {
+            $peserta = Peserta::findOrFail($id);
+
+            // Hapus file dokumen jika ada
+            if ($peserta->file_dokumen) {
+                Storage::disk('public')->delete($peserta->file_dokumen);
+            }
+
+            $peserta->delete();
+
+            return redirect()->route('pesertas.index')->with('success', 'Peserta berhasil dihapus');
+        } catch (\Exception $e) {
+            return redirect()->route('pesertas.index')->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
+        }
     }
 }
