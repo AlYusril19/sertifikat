@@ -17,7 +17,6 @@ return new class extends Migration
             $table->date('ttl'); // tempat tanggal lahir
             $table->string('sekolah'); // asal sekolah
             $table->string('jurusan');
-            $table->string('file_dokumen');
             $table->timestamps();
         });
     }

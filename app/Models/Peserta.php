@@ -14,7 +14,13 @@ class Peserta extends Model
         'ttl',
         'sekolah',
         'jurusan',
-        'file_dokumen',
+        // 'file_dokumen',
         'nomor_sertifikat'
     ];
+
+    // Relasi ke FileDokumen
+    public function fileDokumen()
+    {
+        return $this->hasOne(FileDokumen::class, 'nomor_sertifikat', 'nomor_sertifikat');
+    }
 }

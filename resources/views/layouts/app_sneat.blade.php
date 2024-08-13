@@ -129,7 +129,7 @@
                   </g>
                 </svg>
               </span>
-              <span class="app-brand-text demo menu-text fw-bolder ms-2">Sneat</span>
+              <span class="app-brand-text demo menu-text fw-bolder ms-2">SkyTaMa</span>
             </a>
 
             <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
@@ -170,6 +170,23 @@
                   <a href="{{ route('pesertas.create') }}" class="menu-link">
                   {{-- <a href="layouts-without-menu.html" class="menu-link"> --}}
                     <div data-i18n="Without menu">Tambah Peserta</div>
+                  </a>
+                </li>
+              </ul>
+
+            </li>
+
+            <li class="menu-item {{ \Route::is('file_dokumen.*') ? 'active open' : '' }}">
+              <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons bx bx-layout"></i>
+                <div data-i18n="Layouts">Sertifikat</div>
+              </a>
+
+              <ul class="menu-sub">
+                <li class="menu-item {{ \Route::is('file_dokumen.create') ? 'active' : '' }}">
+                  <a href="{{ route('file_dokumen.create') }}" class="menu-link">
+                  {{-- <a href="layouts-without-menu.html" class="menu-link"> --}}
+                    <div data-i18n="Without menu">Tambah Sertifikat</div>
                   </a>
                 </li>
               </ul>
@@ -332,7 +349,7 @@
                     document.write(new Date().getFullYear());
                   </script>
                   , made with ❤️ by
-                  <a href="http://skytama.com" target="_blank" class="footer-link fw-bolder">SkyTaMa</a>
+                  <a href="http://skytama.com" target="_blank" class="footer-link fw-bolder">AlYusril</a>
                 </div>
                 <!-- <div>
                   <a href="https://themeselection.com/license/" class="footer-link me-4" target="_blank">License</a>

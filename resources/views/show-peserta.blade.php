@@ -76,7 +76,7 @@
         <div class="mt-2">
           <img
             {{-- src="{{ asset('sneat') }}/assets/img/illustrations/girl-doing-yoga-light.png" --}}
-            src="{{ Storage::url($peserta->file_dokumen) }}"
+            src="{{ Storage::url($peserta->fileDokumen->file_path) }}"
             alt="e-sertifikat"
             width="200"
             class="img-fluid"

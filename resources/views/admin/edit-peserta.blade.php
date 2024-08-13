@@ -42,7 +42,7 @@
                                 <input type="text" class="form-control" id="nomor_sertifikat" name="nomor_sertifikat" value="{{ $peserta->nomor_sertifikat }}" required>
                             </div>
                         </div>
-                        <div class="row mb-3">
+                        {{-- <div class="row mb-3">
                             <label class="col-sm-2 col-form-label" for="file_dokumen">Lembar Sertifikat</label>
                             <div class="input-group">
                                 <input type="file" class="form-control" id="file_dokumen" name="file_dokumen">
@@ -51,7 +51,7 @@
                             <div class="col-sm-10 mt-2">
                                 <img src="{{ asset('storage/' . $peserta->file_dokumen) }}" alt="user-avatar" class="d-block rounded" height="100" width="100" id="uploadedAvatar">
                             </div>
-                        </div>
+                        </div> --}}
                         <div class="mt-4">
                             <button type="submit" class="btn btn-primary me-2">Simpan</button>
                             <button type="reset" class="btn btn-outline-secondary">Batal</button>

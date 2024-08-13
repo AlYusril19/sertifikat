@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BerandaAdminController;
+use App\Http\Controllers\FileDokumenController;
 use App\Http\Controllers\PesertaController;
 use App\Http\Controllers\PublicPesertaController;
 use Illuminate\Support\Facades\Route;
@@ -37,6 +38,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/admin/pesertas/{id}/edit', [PesertaController::class, 'edit'])->name('pesertas.edit');
     Route::put('/admin/pesertas/{id}/edit', [PesertaController::class, 'update'])->name('pesertas.update');
     Route::post('/admin/pesertas', [PesertaController::class, 'store'])->name('pesertas.store');
+    Route::get('/upload-dokumen', [FileDokumenController::class, 'create'])->name('file_dokumen.create');
+    Route::post('/upload-dokumen', [FileDokumenController::class, 'store'])->name('file_dokumen.store');
 });
 
 Route::get('/peserta/{id}', [PublicPesertaController::class, 'show'])->name('pesertas.show');

@@ -28,7 +28,7 @@
                 </div>
                 <div class="form-group mb-3">
                     <label for="file_dokumen">File Dokumen</label>
-                    <a href="{{ Storage::url($peserta->file_dokumen) }}" target="_blank" class="btn btn-primary">Lihat Dokumen</a>
+                    <a href="{{ asset('storage/' . $peserta->fileDokumen->file_path) }}" target="_blank" class="btn btn-primary">Lihat Dokumen</a>
                 </div>
             </div>
         </div>
