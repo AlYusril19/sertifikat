@@ -74,15 +74,22 @@
         <p class="mb-4 mx-2">Berikut adalah data lengkap sertifikat</p>
         {{-- <a href="index.html" class="btn btn-primary">Back to home</a> --}}
         <div class="mt-2">
-          <img
-            {{-- src="{{ asset('sneat') }}/assets/img/illustrations/girl-doing-yoga-light.png" --}}
-            src="{{ Storage::url($peserta->fileDokumen->file_path) }}"
-            alt="e-sertifikat"
-            width="200"
-            class="img-fluid"
-            {{-- data-app-dark-img="illustrations/girl-doing-yoga-dark.png"
-            data-app-light-img="illustrations/girl-doing-yoga-light.png" --}}
-          />
+            {{-- <img
+                src="{{ Storage::url($peserta->fileDokumen->file_path) }}"
+                alt="e-sertifikat"
+                width="200"
+                class="img-fluid"
+            /> --}}
+            @if ($peserta->fileDokumen && Storage::exists($peserta->fileDokumen->file_path))
+                <img
+                    src="{{ Storage::url($peserta->fileDokumen->file_path) }}"
+                    alt="e-sertifikat"
+                    width="200"
+                    class="img-fluid"
+                />
+                @else
+                <p>Dokumen belum di upload.</p>
+            @endif
         </div>
         <div class="form-group mb-3">
             <label for="nama">Nama</label>
