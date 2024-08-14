@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\FileDokumen;
 use App\Models\Peserta;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class PesertaController extends Controller
@@ -36,22 +37,20 @@ class PesertaController extends Controller
             'ttl' => 'required|string|max:64',
             'sekolah' => 'required|string|max:64',
             'jurusan' => 'required|string|max:64',
-            // 'file_dokumen' => 'required|file|mimes:pdf,doc,docx,png|max:2048',
             'nomor_sertifikat' => 'nullable|string|max:32|unique:pesertas,nomor_sertifikat',
         ]);
 
         try {
-            // Menyimpan file dokumen
-            // $filePath = $request->file('file_dokumen')->store('documents', 'public');
-
-            Peserta::create([
+            $peserta = Peserta::create([
                 'nama' => $request->nama,
                 'ttl' => $request->ttl,
                 'sekolah' => $request->sekolah,
                 'jurusan' => $request->jurusan,
-                // 'file_dokumen' => $filePath,
                 'nomor_sertifikat' => $request->nomor_sertifikat,
             ]);
+
+             // URL untuk halaman show peserta
+                $showUrl = route('pesertas.show', $peserta->id);
 
             return redirect()->route('pesertas.create')->with('success', 'Peserta berhasil ditambahkan');
         } catch (\Exception $e) {
@@ -64,7 +63,7 @@ class PesertaController extends Controller
      */
     public function show(string $id)
     {
-        $peserta = Peserta::width('fileDokumen')->findOrFail($id);
+        $peserta = Peserta::findOrFail($id);
         return view('admin.show-peserta', compact('peserta'));
     }
 
@@ -87,24 +86,12 @@ class PesertaController extends Controller
             'ttl' => 'required|string|max:64',
             'sekolah' => 'required|string|max:64',
             'jurusan' => 'required|string|max:64',
-            // 'file_dokumen' => 'nullable|file|mimes:pdf,doc,docx,png|max:2048',
             'nomor_sertifikat' => 'required|string|max:32|unique:pesertas,nomor_sertifikat,' . $id,
         ]);
         
         try {
             $peserta = Peserta::findOrFail($id);
-
-            // if ($request->hasFile('file_dokumen')) {
-            //     // Hapus Dokumen lama jika ada
-            //     if ($peserta->file_dokumen) {
-            //         Storage::disk('public')->delete($peserta->file_dokumen);
-            //     }
-
-            //     // Simpan File Dokumen Baru
-            //     $filePath = $request->file('file_dokumen')->store('documents', 'public');
-            //     $peserta->file_dokumen = $filePath;
-            // }
-
+            
             $peserta->update([
                 'nama' => $request->nama,
                 'ttl' => $request->ttl,
@@ -124,29 +111,28 @@ class PesertaController extends Controller
      */
     public function destroy(string $id)
     {
+        DB::beginTransaction();
+
         try {
             $peserta = Peserta::findOrFail($id);
 
-            // // Hapus file dokumen jika ada
-            // if ($peserta->file_dokumen) {
-            //     Storage::disk('public')->delete($peserta->file_dokumen);
-            // }
+            // Cari semua dokumen terkait berdasarkan nomor sertifikat
+            $fileDokumens = FileDokumen::where('nomor_sertifikat', $peserta->nomor_sertifikat)->get();
 
-            // Cari dokumen terkait berdasarkan nomor sertifikat
-            $fileDokumen = FileDokumen::where('nomor_sertifikat', $peserta->nomor_sertifikat)->first();
-
-            if ($fileDokumen) {
-                // Hapus file dari storage
+            // Hapus file dan data dokumen jika ada
+            foreach ($fileDokumens as $fileDokumen) {
                 Storage::disk('public')->delete($fileDokumen->file_path);
-
-                // Hapus data dokumen dari database
                 $fileDokumen->delete();
             }
 
+            // Hapus data peserta
             $peserta->delete();
+
+            DB::commit();
 
             return redirect()->route('pesertas.index')->with('success', 'Peserta berhasil dihapus');
         } catch (\Exception $e) {
+            DB::rollBack();
             return redirect()->route('pesertas.index')->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
         }
     }

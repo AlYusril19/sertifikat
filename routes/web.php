@@ -33,6 +33,7 @@ Route::middleware(['auth'])->group(function () {
     // Route::get('beranda', [BerandaAdminController::class, 'index'])->name('admin.dasboard');
     Route::get('/admin/dashboard', [BerandaAdminController::class, 'index'])->name('admin.dashboard');
     Route::get('/admin/pesertas/index', [PesertaController::class, 'index'])->name('pesertas.index');
+    Route::delete('admin/pesertas/{id}', [PesertaController::class, 'destroy'])->name('pesertas.destroy');
     Route::get('/admin/pesertas/create', [PesertaController::class, 'create'])->name('pesertas.create');
     Route::get('/admin/pesertas/{id}', [PesertaController::class, 'show'])->name('pesertas.show');
     Route::get('/admin/pesertas/{id}/edit', [PesertaController::class, 'edit'])->name('pesertas.edit');
@@ -40,9 +41,12 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/admin/pesertas', [PesertaController::class, 'store'])->name('pesertas.store');
     Route::get('/upload-dokumen', [FileDokumenController::class, 'create'])->name('file_dokumen.create');
     Route::post('/upload-dokumen', [FileDokumenController::class, 'store'])->name('file_dokumen.store');
+    Route::get('/admin/list-sertifikat', [FileDokumenController::class, 'index'])->name('file_dokumen.index');
+    Route::get('/admin/sertifikats/{id}/edit', [FileDokumenController::class, 'edit'])->name('sertifikats.edit');
+    Route::put('/admin/sertifikats/{id}', [FileDokumenController::class, 'update'])->name('sertifikats.update');
 });
 
-Route::get('/peserta/{id}', [PublicPesertaController::class, 'show'])->name('pesertas.show');
-Route::get('/peserta/{id}/download', [PublicPesertaController::class, 'download'])->name('pesertas.download');
+Route::get('/peserta/{id}', [PublicPesertaController::class, 'show'])->name('public.pesertas.show');
+Route::get('/peserta/{id}/download', [PublicPesertaController::class, 'download'])->name('public.pesertas.download');
 
 Route::post('logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');

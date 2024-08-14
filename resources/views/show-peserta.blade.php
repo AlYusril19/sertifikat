@@ -108,7 +108,7 @@
             <div class="form-group">
                 {{-- <label for="file_dokumen">File Dokumen</label> --}}
                 {{-- <p><a href="{{ asset('storage/' . $peserta->file_dokumen) }}" target="_blank">Lihat Dokumen</a></p> --}}
-                <p><a href="{{ route('pesertas.download', $peserta->id) }}" class="btn btn-success">Download Sertifikat</a></p>
+                <p><a href="{{ route('public.pesertas.download', $peserta->id) }}" class="btn btn-success">Download Sertifikat</a></p>
             </div>
         </div>
     </div>

@@ -183,6 +183,15 @@
               </a>
 
               <ul class="menu-sub">
+                <li class="menu-item {{ \Route::is('file_dokumen.index') ? 'active' : '' }}">
+                  <a href="{{ route('file_dokumen.index') }}" class="menu-link">
+                  {{-- <a href="layouts-without-menu.html" class="menu-link"> --}}
+                    <div data-i18n="Without menu">Daftar Sertifikat</div>
+                  </a>
+                </li>
+              </ul>
+
+              <ul class="menu-sub">
                 <li class="menu-item {{ \Route::is('file_dokumen.create') ? 'active' : '' }}">
                   <a href="{{ route('file_dokumen.create') }}" class="menu-link">
                   {{-- <a href="layouts-without-menu.html" class="menu-link"> --}}

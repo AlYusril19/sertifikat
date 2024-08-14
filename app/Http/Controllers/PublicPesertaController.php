@@ -18,8 +18,8 @@ class PublicPesertaController extends Controller
     {
         $peserta = Peserta::findOrFail($id);
 
-        if ($peserta->file_dokumen) {
-            return Storage::disk('public')->download($peserta->file_dokumen);
+        if ($peserta->fileDokumen->file_path) {
+            return Storage::disk('public')->download($peserta->fileDokumen->file_path);
         }
 
         return redirect()->back()->with('error', 'File dokumen tidak ditemukan.');

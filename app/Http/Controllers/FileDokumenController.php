@@ -13,7 +13,8 @@ class FileDokumenController extends Controller
      */
     public function index()
     {
-        //
+        $sertifikats = FileDokumen::all();
+        return view('admin.index-sertifikat',  compact('sertifikats'));
     }
 
     /**
