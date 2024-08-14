@@ -2,9 +2,13 @@
 
 @section('content')
 <div class="card">
-                <h5 class="card-header">Data Peserta</h5>
-                <div class="table-responsive text-nowrap">
-                  <table class="table">
+                {{-- <h5 class="card-header">Data Peserta</h5> --}}
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">Daftar Peserta</h5>
+                    <a href="{{ route('file_dokumen.create') }}" class="btn btn-primary">Tambah Sertifikat</a>
+                </div>
+                <div class="text-nowrap">
+                  <table class="table table-responsive">
                     <caption class="ms-4">
                       Data Sertifikat
                     </caption>
@@ -27,15 +31,15 @@
                                       <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
                                       <i class="bx bx-dots-vertical-rounded"></i>
                                       </button>
-                                      {{-- <div class="dropdown-menu">
-                                      <a class="dropdown-item" href="{{ route('file_dokumen.show', $sertifikat->id) }}"><i class="bx bx-show-alt me-1"></i> Show</a>
+                                      <div class="dropdown-menu">
+                                      <a class="dropdown-item" href="{{ route('pesertas.show', $sertifikat->peserta->id) }}"><i class="bx bx-show-alt me-1"></i> Show</a>
                                       <a class="dropdown-item" href="{{ route('file_dokumen.edit', $sertifikat->id) }}"><i class="bx bx-edit-alt me-1"></i> Edit</a>
                                       <form action="{{ route('file_dokumen.destroy', $sertifikat->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus peserta ini?');" style="display:inline;">
                                           @csrf
                                           @method('DELETE')
                                           <button type="submit" class="dropdown-item"><i class="bx bx-trash me-1"></i> Delete</button>
                                       </form>
-                                      </div> --}}
+                                      </div>
                                   </div>
                                 </td>
                             </tr>

@@ -28,7 +28,7 @@
                 </div>
                 <div class="form-group mb-3">
                     <label for="file_dokumen">File Dokumen</label>
-                    @if ($peserta->fileDokumen && Storage::exists($peserta->fileDokumen->file_path))
+                    @if ($peserta->fileDokumen && Storage::disk('public')->exists($peserta->fileDokumen->file_path))
                         <a href="{{ asset('storage/' . $peserta->fileDokumen->file_path) }}" target="_blank" class="btn btn-primary">Lihat Dokumen</a>
                     @else
                         <p>Dokumen belum di upload.</p>

@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
 
 Auth::routes();
@@ -39,14 +39,19 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/admin/pesertas/{id}/edit', [PesertaController::class, 'edit'])->name('pesertas.edit');
     Route::put('/admin/pesertas/{id}/edit', [PesertaController::class, 'update'])->name('pesertas.update');
     Route::post('/admin/pesertas', [PesertaController::class, 'store'])->name('pesertas.store');
-    Route::get('/upload-dokumen', [FileDokumenController::class, 'create'])->name('file_dokumen.create');
-    Route::post('/upload-dokumen', [FileDokumenController::class, 'store'])->name('file_dokumen.store');
+    Route::get('/admin/upload-sertifikat', [FileDokumenController::class, 'create'])->name('file_dokumen.create');
+    Route::post('/admin/upload-sertifikat', [FileDokumenController::class, 'store'])->name('file_dokumen.store');
     Route::get('/admin/list-sertifikat', [FileDokumenController::class, 'index'])->name('file_dokumen.index');
-    Route::get('/admin/sertifikats/{id}/edit', [FileDokumenController::class, 'edit'])->name('sertifikats.edit');
-    Route::put('/admin/sertifikats/{id}', [FileDokumenController::class, 'update'])->name('sertifikats.update');
+    Route::get('/admin/sertifikats/{id}/edit', [FileDokumenController::class, 'edit'])->name('file_dokumen.edit');
+    Route::put('/admin/sertifikats/{id}', [FileDokumenController::class, 'update'])->name('file_dokumen.update');
+    Route::delete('/admin/sertifikats/{id}', [FileDokumenController::class, 'destroy'])->name('file_dokumen.destroy');
 });
 
 Route::get('/peserta/{id}', [PublicPesertaController::class, 'show'])->name('public.pesertas.show');
 Route::get('/peserta/{id}/download', [PublicPesertaController::class, 'download'])->name('public.pesertas.download');
 
-Route::post('logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
+// Route::post('logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
+Route::post('/logout', function () {
+    Auth::logout();
+    return redirect('/');
+})->name('logout');

@@ -13,9 +13,18 @@ class PesertaController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $pesertas = Peserta::all();
+        $search = $request->input('search');
+
+        $pesertas = Peserta::query()
+            ->when($search, function ($query, $search) {
+                return $query->where('nama', 'like', "%{$search}%")
+                            ->orWhere('nomor_sertifikat', 'like', "%{$search}%");
+            })
+            ->paginate(10); // Menggunakan paginate untuk hasil per halaman
+
+        // $pesertas = Peserta::all();
         return view('admin.index-peserta', compact('pesertas'));
     }
 
@@ -52,7 +61,7 @@ class PesertaController extends Controller
              // URL untuk halaman show peserta
                 $showUrl = route('pesertas.show', $peserta->id);
 
-            return redirect()->route('pesertas.create')->with('success', 'Peserta berhasil ditambahkan');
+            return redirect()->route('pesertas.index')->with('success', 'Peserta berhasil ditambahkan');
         } catch (\Exception $e) {
             return redirect()->route('pesertas.create')->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
         }

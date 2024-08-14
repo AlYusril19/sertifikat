@@ -80,7 +80,7 @@
                 width="200"
                 class="img-fluid"
             /> --}}
-            @if ($peserta->fileDokumen && Storage::exists($peserta->fileDokumen->file_path))
+            @if ($peserta->fileDokumen && Storage::disk('public')->exists($peserta->fileDokumen->file_path))
                 <img
                     src="{{ Storage::url($peserta->fileDokumen->file_path) }}"
                     alt="e-sertifikat"

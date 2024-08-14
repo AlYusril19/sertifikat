@@ -6,6 +6,7 @@
 
 * Product Page: https://themeselection.com/products/sneat-bootstrap-html-admin-template/
 * Created by: ThemeSelection
+* Eedited by: SkyTaMa
 * License: You must have a valid license purchased in order to legally use the theme for your project.
 * Copyright ThemeSelection (https://themeselection.com)
 
@@ -152,7 +153,7 @@
             <!-- Layouts -->
             <li class="menu-item {{ \Route::is('pesertas.*') ? 'active open' : '' }}">
               <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons bx bx-layout"></i>
+                <i class="menu-icon tf-icons bx bx-group"></i>
                 <div data-i18n="Layouts">Peserta</div>
               </a>
 
@@ -178,7 +179,7 @@
 
             <li class="menu-item {{ \Route::is('file_dokumen.*') ? 'active open' : '' }}">
               <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons bx bx-layout"></i>
+                <i class="menu-icon tf-icons bx bx-book-content"></i>
                 <div data-i18n="Layouts">Sertifikat</div>
               </a>
 
@@ -201,7 +202,7 @@
               </ul>
             </li>
 
-            <li class="menu-header small text-uppercase">
+            {{-- <li class="menu-header small text-uppercase">
               <span class="menu-header-text">Admin</span>
             </li>
             <li class="menu-item">
@@ -216,7 +217,7 @@
                   </a>
                 </li>
               </ul>
-            </li>
+            </li> --}}
           </ul>
         </aside>
         <!-- / Menu -->
@@ -240,12 +241,17 @@
               <div class="navbar-nav align-items-center">
                 <div class="nav-item d-flex align-items-center">
                   <i class="bx bx-search fs-4 lh-0"></i>
-                  <input
-                    type="text"
-                    class="form-control border-0 shadow-none"
-                    placeholder="Search..."
-                    aria-label="Search..."
-                  />
+                  <form action="{{ route('pesertas.index') }}" method="GET" class="d-flex">
+                    <input
+                      type="text"
+                      name="search"
+                      class="form-control border-0 shadow-none"
+                      placeholder="Search..."
+                      aria-label="Search..."
+                      value="{{ request('search') }}"
+                    />
+                    {{-- <button type="submit" class="btn btn-primary">Cari</button> --}}
+                  </form>
                 </div>
               </div>
               <!-- /Search -->
@@ -270,7 +276,12 @@
                             </div>
                           </div>
                           <div class="flex-grow-1">
-                            <span class="fw-semibold d-block">John Doe</span>
+                            @php
+                                $name = explode(' ', Auth::user()->name);
+                                $firstTwoWords = implode(' ', array_slice($name, 0, 2));
+                            @endphp
+
+                            <span class="fw-semibold d-block">{{ $firstTwoWords }}</span>
                             <small class="text-muted">Admin</small>
                           </div>
                         </div>
@@ -286,28 +297,18 @@
                       </a>
                     </li>
                     <li>
-                      <a class="dropdown-item" href="#">
-                        <i class="bx bx-cog me-2"></i>
-                        <span class="align-middle">Settings</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a class="dropdown-item" href="#">
-                        <span class="d-flex align-items-center align-middle">
-                          <i class="flex-shrink-0 bx bx-credit-card me-2"></i>
-                          <span class="flex-grow-1 align-middle">Billing</span>
-                          <span class="flex-shrink-0 badge badge-center rounded-pill bg-danger w-px-20 h-px-20">4</span>
-                        </span>
-                      </a>
-                    </li>
-                    <li>
                       <div class="dropdown-divider"></div>
                     </li>
                     <li>
-                      <a class="dropdown-item" href="auth-login-basic.html">
+                      <a class="dropdown-item" href="{{ route('logout') }}" 
+                      onclick="event.preventDefault();
+                      document.getElementById('logout-form').submit();">
                         <i class="bx bx-power-off me-2"></i>
                         <span class="align-middle">Log Out</span>
                       </a>
+                      <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                        @csrf
+                      </form>
                     </li>
                   </ul>
                 </li>

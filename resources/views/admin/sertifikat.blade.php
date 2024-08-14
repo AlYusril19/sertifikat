@@ -15,7 +15,7 @@
                     <select name="nomor_sertifikat" id="nomor_sertifikat" class="form-control select2" required>
                         <option value="">Pilih Nomor Sertifikat</option>
                         @foreach($pesertas as $peserta)
-                            <option value="{{ $peserta->nomor_sertifikat }}">{{ $peserta->nomor_sertifikat }}</option>
+                            <option value="{{ $peserta->nomor_sertifikat }}">{{ $peserta->nomor_sertifikat }} | {{ $peserta->nama }}</option>
                         @endforeach
                     </select>
                 </div>
