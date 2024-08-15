@@ -203,22 +203,29 @@
               </ul>
             </li>
 
-            {{-- <li class="menu-header small text-uppercase">
+            <li class="menu-header small text-uppercase">
               <span class="menu-header-text">Admin</span>
             </li>
-            <li class="menu-item">
+            <li class="menu-item {{ \Route::is('users.*') ? 'active open' : '' }}">
               <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-dock-top"></i>
-                <div data-i18n="Account Settings">Account Settings</div>
+                <div data-i18n="Account Settings">Akun Admin</div>
               </a>
               <ul class="menu-sub">
-                <li class="menu-item">
-                  <a href="pages-account-settings-account.html" class="menu-link">
-                    <div data-i18n="Account">Account</div>
+                <li class="menu-item {{ \Route::is('users.index') ? 'active' : '' }}">
+                  <a href="{{ route('users.index') }}" class="menu-link">
+                    <div data-i18n="Account">Daftar Akun</div>
                   </a>
                 </li>
               </ul>
-            </li> --}}
+              <ul class="menu-sub">
+                <li class="menu-item {{ \Route::is('users.create') ? 'active' : '' }}">
+                  <a href="{{ route('users.create') }}" class="menu-link">
+                    <div data-i18n="Account">Tambah Akun</div>
+                  </a>
+                </li>
+              </ul>
+            </li>
           </ul>
         </aside>
         <!-- / Menu -->

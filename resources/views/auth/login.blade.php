@@ -201,9 +201,9 @@
               </form>
 
               <p class="text-center">
-                <span>New on our platform?</span>
-                <a href="{{ route('register') }}">
-                  <span>Create an account</span>
+                <span>Halaman Khusus Staff SkyTaMa!</span>
+                <a href="http://skytama.com" target="_blank">
+                  <span>More Information</span>
                 </a>
               </p>
             </div>

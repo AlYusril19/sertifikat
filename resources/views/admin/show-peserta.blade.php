@@ -34,6 +34,15 @@
                         <p>Dokumen belum di upload.</p>
                     @endif
                 </div>
+                <!-- Generate QR Code menggunakan Google Chart API -->
+                <div class="mt-4">
+                    <p>Bubuhkan Qr Code berikut ke Sertifikat Peserta</p>
+                    {{-- <img src="https://chart.googleapis.com/chart?chs=200x200&cht=qr&chl={{ route('public.pesertas.show', $peserta->id) }}" alt="QR Code"> --}}
+                    <img src="https://quickchart.io/qr?text={{ route('public.pesertas.show', $peserta->id) }}&size=200" alt="Qr Code">
+                </div>
+                <p>
+                    Jika Generate QR Code tidak muncul, silahkan copy link berikut dan convert menjadi qrcode <a href="{{ route('public.pesertas.show', $peserta->id) }}" target="_blank">link peserta</a>
+                </p>
             </div>
         </div>
     </div>
