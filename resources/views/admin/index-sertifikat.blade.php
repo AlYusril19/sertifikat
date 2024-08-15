@@ -7,7 +7,7 @@
                     <h5 class="mb-0">Daftar Peserta</h5>
                     <a href="{{ route('file_dokumen.create') }}" class="btn btn-primary">Tambah Sertifikat</a>
                 </div>
-                <div class="text-nowrap">
+                <div class="text-nowrap table-responsive">
                   <table class="table table-responsive">
                     <caption class="ms-4">
                       Data Sertifikat

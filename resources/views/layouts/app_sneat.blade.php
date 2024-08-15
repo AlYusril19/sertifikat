@@ -147,6 +147,7 @@
                 <a href="{{ route('admin.dashboard') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
                 <div data-i18n="Analytics">Dashboard</div>
+                <span class="badge rounded-pill bg-danger ms-auto">{{ $jumlahPesertaTanpaDokumen }}</span>
               </a>
             </li>
 
