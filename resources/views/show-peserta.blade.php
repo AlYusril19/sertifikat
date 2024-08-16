@@ -62,63 +62,101 @@
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
     <script src="{{ asset('sneat') }}/assets/js/config.js"></script>
+
   </head>
 
   <body>
     <!-- Content -->
 
     <!--Under Maintenance -->
-    <div class="container-xxl container-p-y">
-      <div class="misc-wrapper">
-        <h2 class="mb-2 mx-2">Sertifikat Verified!</h2>
-        <p class="mb-4 mx-2">Berikut adalah data lengkap sertifikat</p>
-        {{-- <a href="index.html" class="btn btn-primary">Back to home</a> --}}
-        <div class="mt-2">
-            {{-- <img
-                src="{{ Storage::url($peserta->fileDokumen->file_path) }}"
-                alt="e-sertifikat"
-                width="200"
-                class="img-fluid"
-            /> --}}
+    <nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme">
+      <div class="container-fluid">
+          <!-- Logo di bagian kiri -->
+          <a class="navbar-brand" href="http://skytama.com" target="blank">
+              <img src="{{ asset('img/logobaru.png') }}" alt="Logo" width="100" class="d-inline-block align-text-top">
+          </a>
+          
+          <!-- Judul di bagian kanan -->
+          <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                <span class="navbar-text" style="color: #000066; font-size: 16px;">
+                    <strong>PT. SKYNET MEDIA UTAMA</strong>
+                    <br>
+                    <span style="color: #000066; font-size: 14px;">
+                      <a href="https://maps.app.goo.gl/jFPtGNT7Bn7kP78L8" target="blank">
+                        Kalikatir RT.05 RW.03, Kalikatir, Gondang, Mojokerto
+                      </a>
+                    </span>
+                </span>
+                </li>
+            </ul>
+          </div>
+      </div>
+    </nav>
+
+    <div class="container-xxl container-p-y" style="color: #000000;">
+    <div class="text-center mb-4">
+        <h2>Sertifikat Verified!         
+            <img src="{{ asset('img/verified2.png') }}" alt="Verified" width="30" height="30" class="ms-2">
+        </h2>
+        <p>Berikut adalah data lengkap sertifikat</p>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
             @if ($peserta->fileDokumen && Storage::disk('public')->exists($peserta->fileDokumen->file_path))
-                <img
-                    src="{{ Storage::url($peserta->fileDokumen->file_path) }}"
-                    alt="e-sertifikat"
-                    width="200"
-                    class="img-fluid"
-                />
-                @else
+              @php
+                $fileExtension = pathinfo($peserta->fileDokumen->file_path, PATHINFO_EXTENSION);
+              @endphp
+              @if (in_array($fileExtension, ['jpg', 'jpeg', 'png', 'gif']))
+                  <img
+                      src="{{ Storage::url($peserta->fileDokumen->file_path) }}"
+                      alt="e-sertifikat"
+                      width="100%" 
+                      class="img-fluid"
+                  />
+              @elseif ($fileExtension === 'pdf')
+                  <embed
+                      src="{{ Storage::url($peserta->fileDokumen->file_path) }}"
+                      type="application/pdf"
+                      width="100%"
+                      height="400"
+                  />
+              @else
+                <p>File tidak dapat ditampilkan.</p>
+              @endif
+            @else
                 <p>Dokumen belum di upload.</p>
             @endif
         </div>
-        <div class="form-group mb-3">
-            <label for="nama">Nama</label>
-            <input type="text" class="form-control" id="nama" value="{{ $peserta->nama }}" readonly>
-        </div>
-        <div class="form-group mb-3">
-            <label for="sekolah">Asal Sekolah</label>
-            <input type="text" class="form-control" id="sekolah" value="{{ $peserta->sekolah }}" readonly>
-        </div>
-        <div class="form-group mb-3">
-            <label for="jurusan">Jurusan</label>
-            <input type="text" class="form-control" id="jurusan" value="{{ $peserta->jurusan }}" readonly>
-        </div>
-        <div class="form-group mb-3">
-            <label for="ttl">Tempat Tanggal Lahir</label>
-            <input type="text" class="form-control" id="ttl" value="{{ $peserta->ttl }}" readonly>
-        </div>
-        <div class="form-group mb-3">
-            <label for="nomor_sertifikat">Nomor Sertifikat</label>
-            <input type="text" class="form-control" id="nomor_sertifikat" value="{{ $peserta->nomor_sertifikat }}" readonly>
-        </div>
-        <div class="form-group mb-3">
-            <div class="form-group">
-                {{-- <label for="file_dokumen">File Dokumen</label> --}}
-                {{-- <p><a href="{{ asset('storage/' . $peserta->file_dokumen) }}" target="_blank">Lihat Dokumen</a></p> --}}
-                <p><a href="{{ route('public.pesertas.download', $peserta->id) }}" class="btn btn-success">Download Sertifikat</a></p>
+        <div class="col-md-6">
+            <div class="form-group mb-3 mt-3">
+                <label for="nama">Nama</label>
+                <input type="text" class="form-control" id="nama" value="{{ $peserta->nama }}" readonly>
+            </div>
+            <div class="form-group mb-3">
+                <label for="sekolah">Asal Sekolah</label>
+                <input type="text" class="form-control" id="sekolah" value="{{ $peserta->sekolah }}" readonly>
+            </div>
+            <div class="form-group mb-3">
+                <label for="jurusan">Jurusan</label>
+                <input type="text" class="form-control" id="jurusan" value="{{ $peserta->jurusan }}" readonly>
+            </div>
+            <div class="form-group mb-3">
+                <label for="ttl">Tempat Tanggal Lahir</label>
+                <input type="text" class="form-control" id="ttl" value="{{ $peserta->ttl }}" readonly>
+            </div>
+            <div class="form-group mb-3">
+                <label for="nomor_sertifikat">Nomor Sertifikat</label>
+                <input type="text" class="form-control" id="nomor_sertifikat" value="{{ $peserta->nomor_sertifikat }}" readonly>
+            </div>
+            <div class="form-group mb-3">
+                <p><a href="{{ route('public.pesertas.download', $peserta->id) }}" class="btn btn-primary">Download Sertifikat</a></p>
             </div>
         </div>
     </div>
+</div>
+
     <!-- /Under Maintenance -->
 
     <!-- / Content -->
