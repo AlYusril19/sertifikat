@@ -26,12 +26,26 @@
                     <label for="nomor_sertifikat">Nomor Sertifikat</label>
                     <input type="text" class="form-control" id="nomor_sertifikat" value="{{ $peserta->nomor_sertifikat }}" readonly>
                 </div>
-                <div class="form-group mb-3">
+                {{-- <div class="form-group mb-3">
                     <label for="file_dokumen">File Dokumen</label>
                     @if ($peserta->fileDokumen && Storage::disk('public')->exists($peserta->fileDokumen->file_path))
                         <a href="{{ asset('storage/' . $peserta->fileDokumen->file_path) }}" target="_blank" class="btn btn-primary">Lihat Dokumen</a>
                     @else
                         <p>Dokumen belum di upload.</p>
+                    @endif
+                </div> --}}
+                <div class="mt-4">
+                    <!-- Tampilkan gambar sertifikat dengan teks -->
+                    @if(isset($uploadedImageUrl))
+                        <div class="sertifikat">
+                            {{-- <img src="{{ $uploadedImageUrl }}" alt="Sertifikat" class="img-fluid"> --}}
+                            <img
+                                src="{{ $uploadedImageUrl }}"
+                                alt="e-sertifikat"
+                                width="300" 
+                                class="img-fluid"
+                            />
+                        </div>
                     @endif
                 </div>
                 <!-- Generate QR Code menggunakan Google Chart API -->
