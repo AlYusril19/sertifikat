@@ -36,18 +36,23 @@
                             </div>
                         </div>
                         <div class="row mb-3">
+                            <label class="col-sm-2 col-form-label" for="tanggal_masuk">Tanggal Masuk</label>
+                            <div class="col-sm-10">
+                                <input type="date" class="form-control" id="tanggal_masuk" name="tanggal_masuk" required>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-2 col-form-label" for="tanggal_keluar">Tanggal Keluar</label>
+                            <div class="col-sm-10">
+                                <input type="date" class="form-control" id="tanggal_keluar" name="tanggal_keluar" required>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
                             <label class="col-sm-2 col-form-label" for="nomor_sertifikat">Nomor Sertifikat</label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" id="nomor_sertifikat" name="nomor_sertifikat" placeholder="SMA-19/29321/1199" required>
                             </div>
                         </div>
-                        {{-- <div class="row mb-3">
-                            <label class="col-sm-2 col-form-label" for="file_dokumen">Lembar Sertifikat</label>
-                            <div class="input-group">
-                                <input type="file" class="form-control" id="file_dokumen" name="file_dokumen" required>
-                                <label class="input-group-text" for="inputGroupFile02">Upload</label>
-                            </div>
-                        </div> --}}
                         <div class="mt-4">
                             <button type="submit" class="btn btn-primary me-2">Simpan</button>
                             <button type="reset" class="btn btn-outline-secondary">Batal</button>

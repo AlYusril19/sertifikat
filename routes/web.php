@@ -31,6 +31,7 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/admin/pesertas/{id}', [PesertaController::class, 'destroy'])->name('pesertas.destroy');
     Route::get('/admin/pesertas/create', [PesertaController::class, 'create'])->name('pesertas.create');
     Route::get('/admin/pesertas/{id}', [PesertaController::class, 'show'])->name('pesertas.show');
+    Route::get('/admin/pesertas/{id}/generate', [PesertaController::class, 'generate'])->name('pesertas.generate');
     Route::get('/admin/pesertas/{id}/edit', [PesertaController::class, 'edit'])->name('pesertas.edit');
     Route::put('/admin/pesertas/{id}/edit', [PesertaController::class, 'update'])->name('pesertas.update');
     Route::post('/admin/pesertas', [PesertaController::class, 'store'])->name('pesertas.store');

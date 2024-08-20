@@ -167,14 +167,13 @@
                 </li>
               </ul>
 
-              <ul class="menu-sub">
+              {{-- <ul class="menu-sub">
                 <li class="menu-item {{ \Route::is('pesertas.create') ? 'active' : '' }}">
                   <a href="{{ route('pesertas.create') }}" class="menu-link">
-                  {{-- <a href="layouts-without-menu.html" class="menu-link"> --}}
                     <div data-i18n="Without menu">Tambah Peserta</div>
                   </a>
                 </li>
-              </ul>
+              </ul> --}}
 
             </li>
 
@@ -193,14 +192,13 @@
                 </li>
               </ul>
 
-              <ul class="menu-sub">
+              {{-- <ul class="menu-sub">
                 <li class="menu-item {{ \Route::is('file_dokumen.create') ? 'active' : '' }}">
                   <a href="{{ route('file_dokumen.create') }}" class="menu-link">
-                  {{-- <a href="layouts-without-menu.html" class="menu-link"> --}}
                     <div data-i18n="Without menu">Tambah Sertifikat</div>
                   </a>
                 </li>
-              </ul>
+              </ul> --}}
             </li>
 
             <li class="menu-header small text-uppercase">
@@ -218,13 +216,13 @@
                   </a>
                 </li>
               </ul>
-              <ul class="menu-sub">
+              {{-- <ul class="menu-sub">
                 <li class="menu-item {{ \Route::is('users.create') ? 'active' : '' }}">
                   <a href="{{ route('users.create') }}" class="menu-link">
                     <div data-i18n="Account">Tambah Akun</div>
                   </a>
                 </li>
-              </ul>
+              </ul> --}}
             </li>
           </ul>
         </aside>
@@ -336,14 +334,24 @@
               </div>
 
               @if(session('success'))
-                  <div class="alert alert-success">
+                  {{-- <div class="alert alert-success">
                       {{ session('success') }}
+                  </div> --}}
+                  <div class="alert alert-success alert-dismissible" role="alert">
+                    {{ session('success') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                    </button>
                   </div>
               @endif
 
               @if(session('error'))
-                  <div class="alert alert-danger">
+                  {{-- <div class="alert alert-danger">
                       {{ session('error') }}
+                  </div> --}}
+                  <div class="alert alert-danger alert-dismissible" role="alert">
+                    {{ session('error') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                    </button>
                   </div>
               @endif
 
@@ -367,7 +375,7 @@
                     document.write(new Date().getFullYear());
                   </script>
                   , made with ❤️ by
-                  <a href="http://skytama.com" target="_blank" class="footer-link fw-bolder">AlYusril</a>
+                  <a href="http://skytama.com" target="_blank" class="footer-link fw-bolder">SkyTaMa</a>
                 </div>
                 <!-- <div>
                   <a href="https://themeselection.com/license/" class="footer-link me-4" target="_blank">License</a>

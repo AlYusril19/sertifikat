@@ -4,7 +4,7 @@
 <div class="card">
                 {{-- <h5 class="card-header">Data Peserta</h5> --}}
                 <div class="card-header d-flex justify-content-between align-items-center">
-                    <h5 class="mb-0">Daftar Peserta</h5>
+                    <h5 class="mb-0">Daftar Sertifikat Peserta</h5>
                     <a href="{{ route('file_dokumen.create') }}" class="btn btn-primary">Tambah Sertifikat</a>
                 </div>
                 <div class="text-nowrap table-responsive">

@@ -15,8 +15,14 @@ class Peserta extends Model
         'ttl',
         'sekolah',
         'jurusan',
+        'tanggal_masuk',
+        'tanggal_keluar',
         // 'file_dokumen',
         'nomor_sertifikat'
+    ];
+    protected $casts = [
+        'tanggal_masuk' => 'datetime',
+        'tanggal_keluar' => 'datetime',
     ];
 
     // Relasi ke FileDokumen

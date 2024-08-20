@@ -30,7 +30,12 @@
                 <tbody class="table-border-bottom-0">
                     @foreach($pesertas as $peserta)
                         <tr>
-                            <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>{{ $peserta->nama }}</strong></td>
+                            <td>
+                                <i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>{{ $peserta->nama }}</strong>
+                                @if (empty($peserta->fileDokumen) || !Storage::disk('public')->exists($peserta->fileDokumen->file_path))
+                                    <span class="badge rounded-pill bg-danger ms-auto"> </span>
+                                @endif
+                            </td>
                             <td>{{ $peserta->sekolah }}</td>
                             <td>{{ $peserta->jurusan }}</td>
                             <td>{{ $peserta->nomor_sertifikat }}</td>

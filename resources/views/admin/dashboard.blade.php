@@ -11,7 +11,7 @@
                         <p class="mb-4">
                             Ada <span class="fw-bold">{{ $peserta }}</span> Peserta yang belum dapat sertifikat
                         </p>
-                        <a href="{{ route('file_dokumen.create') }}" class="btn btn-sm btn-outline-primary">Tambah Sertifikat</a>
+                        <a href="{{ route('pesertas.index') }}" class="btn btn-sm btn-outline-primary">Tambah Sertifikat</a>
                     </div>
                 </div>
                 <div class="col-sm-5 text-center text-sm-left">
