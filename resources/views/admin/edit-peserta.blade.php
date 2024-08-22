@@ -37,6 +37,12 @@
                             </div>
                         </div>
                         <div class="row mb-3">
+                            <label class="col-sm-2 col-form-label" for="angkatan">Angkatan Magang</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="angkatan" name="angkatan" value="{{ $peserta->angkatan }}" required>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
                             <label class="col-sm-2 col-form-label" for="tanggal_masuk">Tanggal Masuk</label>
                             <div class="col-sm-10">
                                 <input type="date" class="form-control" id="tanggal_masuk" name="tanggal_masuk" value="{{ $peserta->tanggal_masuk }}" required>

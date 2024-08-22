@@ -50,24 +50,41 @@ class PesertaController extends Controller
             'ttl' => 'required|string|max:64',
             'sekolah' => 'required|string|max:64',
             'jurusan' => 'required|string|max:64',
+            'angkatan' => 'required|string|max:32',
             'tanggal_masuk' => 'required|date',
             'tanggal_keluar' => 'required|date',
-            'nomor_sertifikat' => 'nullable|string|max:32|unique:pesertas,nomor_sertifikat',
+            'nomor_sertifikat' => 'nullable|string|unique:pesertas,nomor_sertifikat',
         ]);
 
         try {
+            // Generate nomor sertifikat otomatis
+            $id = Peserta::max('id') + 1; // Dapatkan ID peserta terakhir dan tambahkan 1
+            $bulan = date('m'); // Dapatkan bulan saat ini
+            $tahun = date('Y'); // Dapatkan tahun saat ini
+            $angkatan = $request->angkatan;
+
+            // Ambil nomor urut berdasarkan angkatan
+            $lastNumber = Peserta::where('angkatan', $request->angkatan)
+                                ->max('nomor_cetak');
+
+            $nomor_cetak = $lastNumber ? ((int) filter_var($lastNumber, FILTER_SANITIZE_NUMBER_INT)) + 1 : 1;
+            $noCetak = str_pad($nomor_cetak, 2, '0', STR_PAD_LEFT);
+            $nomorSertifikat = "SMA-$noCetak/$angkatan/$bulan/$tahun";
+
             $peserta = Peserta::create([
                 'nama' => $request->nama,
                 'ttl' => $request->ttl,
                 'sekolah' => $request->sekolah,
                 'jurusan' => $request->jurusan,
+                'angkatan' => $request->angkatan,
                 'tanggal_masuk' => $request->tanggal_masuk,
                 'tanggal_keluar' => $request->tanggal_keluar,
-                'nomor_sertifikat' => $request->nomor_sertifikat,
+                'nomor_sertifikat' => $nomorSertifikat,
+                'nomor_cetak' => $nomor_cetak
             ]);
 
              // URL untuk halaman show peserta
-                $showUrl = route('pesertas.show', $peserta->id);
+                // $showUrl = route('pesertas.show', $peserta->id);
 
             return redirect()->route('pesertas.index')->with('success', 'Peserta berhasil ditambahkan');
         } catch (\Exception $e) {
@@ -103,9 +120,11 @@ class PesertaController extends Controller
             'ttl' => 'required|string|max:64',
             'sekolah' => 'required|string|max:64',
             'jurusan' => 'required|string|max:64',
+            'angkatan' => 'required|string|max:32',
             'tanggal_masuk' => 'required|date',
             'tanggal_keluar' => 'required|date',
             'nomor_sertifikat' => 'required|string|max:32|unique:pesertas,nomor_sertifikat,' . $id,
+            'nomor_cetak' => 'required|string|max:32',
         ]);
         
         try {
@@ -116,9 +135,11 @@ class PesertaController extends Controller
                 'ttl' => $request->ttl,
                 'sekolah' => $request->sekolah,
                 'jurusan' => $request->jurusan,
+                'angkatan' => $request->angkatan,
                 'tanggal_masuk' => $request->tanggal_masuk,
                 'tanggal_keluar' => $request->tanggal_keluar,
                 'nomor_sertifikat' => $request->nomor_sertifikat,
+                'nomor_cetak' => $request->nomor_cetak,
             ]);
 
             return redirect()->route('pesertas.show', $peserta->id )->with('success', 'Peserta berhasil diupdate');
@@ -286,14 +307,6 @@ class PesertaController extends Controller
 
             Cloudinary::destroy($lembarSertifikatPublicId);
             Cloudinary::destroy($qrCodeUrlPublicId);
-
-            // Stream download gambar dan setelah selesai, hapus dari Cloudinary
-            // return response()->streamDownload(function() use ($lembarSertifikatUrl, $lembarSertifikatPublicId, $qrCodeUrlPublicId) {
-            //     echo file_get_contents($lembarSertifikatUrl);
-            //     // Hapus file dari Cloudinary setelah stream selesai
-            //     Cloudinary::destroy($lembarSertifikatPublicId);
-            //     Cloudinary::destroy($qrCodeUrlPublicId);
-            // }, 'sertifikat_'.$peserta->nama.'.png');
             
             // Download file dan hapus file setelah didownload
             return response()->download(storage_path("app/public/{$filePath}"), 'sertifikat_'."$peserta->nama".'.png');
