@@ -37,4 +37,25 @@ class Peserta extends Model
     {
         return $this->hasMany(Nilai::class);
     }
+
+    public function calculateMean($nilaiCollection)
+    {
+        $totalNilai = $nilaiCollection->sum('nilai');
+        $jumlahKategori = $nilaiCollection->count();
+        return $jumlahKategori > 0 ? $totalNilai / $jumlahKategori : 0;
+    }
+
+    public function filterAkademis()
+    {
+        return $this->nilai->filter(function($nilai) {
+            return $nilai->kategori->kategori === 'Akademis';
+        });
+    }
+
+    public function filterNonAkademis()
+    {
+        return $this->nilai->filter(function($nilai) {
+            return $nilai->kategori->kategori === 'Non-Akademis';
+        });
+    }
 }

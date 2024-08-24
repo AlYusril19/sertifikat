@@ -85,9 +85,6 @@ class PesertaController extends Controller
                 'nomor_cetak' => $nomor_cetak
             ]);
 
-             // URL untuk halaman show peserta
-                // $showUrl = route('pesertas.show', $peserta->id);
-
             return redirect()->route('pesertas.index')->with('success', 'Peserta berhasil ditambahkan');
         } catch (\Exception $e) {
             return redirect()->route('pesertas.create')->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
@@ -103,23 +100,13 @@ class PesertaController extends Controller
         $kategoris = Kategori::all();
         $nilai = Nilai::where('peserta_id', $peserta->id)->get();
 
-        // Filter nilai berdasarkan kategori utama
-        $akademis = $peserta->nilai->filter(function($nilai) {
-            return $nilai->kategori->kategori === 'Akademis';
-        });
-
-        $nonAkademis = $peserta->nilai->filter(function($nilai) {
-            return $nilai->kategori->kategori === 'Non-Akademis';
-        });
+        // Filter nilai berdasarkan kategori
+        $akademis = $peserta->filterAkademis();
+        $nonAkademis = $peserta->filterNonAkademis();
 
         // Hitung Rata-rata Nilai Peserta
-        $totalNilai = $akademis->sum('nilai');
-        $jumlahKategori = $akademis->count();
-        $meanAkademis = $jumlahKategori > 0 ? $totalNilai / $jumlahKategori : 0;
-
-        $totalNilai = $nonAkademis->sum('nilai');
-        $jumlahKategori = $nonAkademis->count();
-        $meanNonAkademis = $jumlahKategori > 0 ? $totalNilai / $jumlahKategori : 0;
+        $meanAkademis = $peserta->calculateMean($akademis);
+        $meanNonAkademis = $peserta->calculateMean($nonAkademis);
 
         $rataRata = $meanAkademis && $meanNonAkademis > 0 ? ($meanAkademis + $meanNonAkademis) / 2 : 0;
         return view('admin.show-peserta', compact('peserta', 'kategoris' , 'akademis', 'nonAkademis', 'nilai', 'meanAkademis', 'meanNonAkademis', 'rataRata'));
@@ -148,11 +135,11 @@ class PesertaController extends Controller
             'tanggal_masuk' => 'required|date',
             'tanggal_keluar' => 'required|date',
             'nomor_sertifikat' => 'required|string|max:32|unique:pesertas,nomor_sertifikat,' . $id,
-            'nomor_cetak' => 'required|string|max:32',
         ]);
         
         try {
             $peserta = Peserta::findOrFail($id);
+            $nomor_cetak = $peserta->nomor_cetak;
             
             $peserta->update([
                 'nama' => $request->nama,
@@ -163,7 +150,7 @@ class PesertaController extends Controller
                 'tanggal_masuk' => $request->tanggal_masuk,
                 'tanggal_keluar' => $request->tanggal_keluar,
                 'nomor_sertifikat' => $request->nomor_sertifikat,
-                'nomor_cetak' => $request->nomor_cetak,
+                'nomor_cetak' => $nomor_cetak,
             ]);
 
             return redirect()->route('pesertas.show', $peserta->id )->with('success', 'Peserta berhasil diupdate');
@@ -338,6 +325,13 @@ class PesertaController extends Controller
         } catch (\Exception $e) {
             return redirect()->route('pesertas.index')->with('error', 'Terjadi kesalahan saat mengupload gambar: ' . $e->getMessage());
         }
+    }
+
+    private function calculateMean($nilaiCollection)
+    {
+        $totalNilai = $nilaiCollection->sum('nilai');
+        $jumlahKategori = $nilaiCollection->count();
+        return $jumlahKategori > 0 ? $totalNilai / $jumlahKategori : 0;
     }
 
 }

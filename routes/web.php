@@ -53,6 +53,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/admin/kategoris/create', [KategoriController::class, 'create'])->name('kategoris.create');
     Route::post('/admin/kategoris', [KategoriController::class, 'store'])->name('kategoris.store');
     Route::get('/admin/kategoris/index', [KategoriController::class, 'index'])->name('kategoris.index');
+    Route::get('/admin/kategoris/{id}/edit', [KategoriController::class, 'edit'])->name('kategoris.edit');
+    Route::put('/admin/kategoris/{id}/edit', [KategoriController::class, 'update'])->name('kategoris.update');
     Route::delete('/admin/kategoris/{id}', [KategoriController::class, 'destroy'])->name('kategoris.destroy');
 
     Route::post('/admin/nilais', [NilaiController::class, 'store'])->name('nilais.store');

@@ -146,7 +146,7 @@
     </div>
   </div> --}}
     
-  <div class="card" style="box-shadow: 0 4px 10px rgba(0, 0, 0, 0.244);">  
+  <div class="card mb-4" style="box-shadow: 0 4px 10px rgba(0, 0, 0, 0.244);">  
     <div class="row">
       <div class="col-md-6 col-sm-12 d-flex mb-2 mt-2 justify-content-center" style="max-width: 40%; margin-left: auto; margin-right: auto;">
         @if ($peserta->fileDokumen && Storage::disk('public')->exists($peserta->fileDokumen->file_path))
@@ -201,6 +201,74 @@
       </div>
     </div>
   </div>
+
+  {{-- Nilai Peserta --}}
+  <div class="card mb-4">
+            <div class="card-header">
+                <h5>List Nilai</h5>
+            </div>
+            <div class="card-body">
+                <div class="text-nowarp table-responsive">
+                    {{-- Tabel Akademis --}}
+                    <table class="table table-bordered mb-3">
+                        <caption class="ms-4">
+                            Kategori Nilai Akademis
+                        </caption>
+                        <thead>
+                            <tr align="center">
+                                <th width="7%">No</th>
+                                <th>Kategori</th>
+                                <th width="10%">Nilai</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($akademis as $index => $nilai)
+                                <tr>
+                                    <td align="center"><i class="fab fa-angular fa-lg text-danger"></i> <strong>{{ $loop->iteration }}</strong></td>
+                                    <td>{{ $nilai->kategori->nama }}</td>
+                                    <td align="center">{{ $nilai->nilai }}</td>
+                                </tr>
+                            @endforeach
+                            <tr>
+                                <td colspan="2" align="right"><strong>Rata-Rata</strong></td>
+                                <td align="center"><strong>{{ number_format($meanAkademis, 2) }}</strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    {{-- Tabel Non-Akademis --}}
+                    <table class="table table-bordered mb-3">
+                        <caption class="ms-4">
+                            Kategori Nilai Non-Akademis
+                        </caption>
+                        <thead>
+                            <tr align="center">
+                                <th width="7%">No</th>
+                                <th>Kategori</th>
+                                <th width="10%">Nilai</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($nonAkademis as $index => $nilai)
+                                <tr>
+                                    <td align="center"><i class="fab fa-angular fa-lg text-danger"></i> <strong>{{ $loop->iteration }}</strong></td>
+                                    <td>{{ $nilai->kategori->nama }}</td>
+                                    <td align="center">{{ $nilai->nilai }}</td>
+                                </tr>
+                            @endforeach
+                            <tr>
+                                <td colspan="2" align="right"><strong>Rata-Rata</strong></td>
+                                <td align="center"><strong>{{ number_format($meanNonAkademis, 2) }}</strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <p>Rata - rata Nilai Akademis dan Non-Akademis = {{ number_format($rataRata, 2) }}</p>
+                </div>
+            </div>
+        </div>
+  {{-- End Nilai Peserta --}}
+
 </div>
 </div>
 

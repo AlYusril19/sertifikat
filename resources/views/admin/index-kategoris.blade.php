@@ -26,11 +26,18 @@
                                 <td align="center"><i class="fab fa-angular fa-lg text-danger"></i> <strong>{{ $loop->iteration }}</strong></td>
                                 <td>{{ $kategori->nama }}</td>
                                 <td>
-                                    <form action="{{ route('kategoris.destroy', $kategori->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus peserta ini?');">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="dropdown-item"><i class="bx bx-trash me-1"></i> Delete</button>
-                                    </form>
+                                    <div class="d-flex">
+                                        <form action="{{ route('kategoris.destroy', $kategori->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus peserta ini?');" style="margin: 0;">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="dropdown-item">
+                                                <i class="bx bx-trash me-1"></i>
+                                            </button>
+                                        </form>
+                                        <a class="dropdown-item" href="{{ route('kategoris.edit', $kategori->id) }}">
+                                            <i class="bx bx-edit-alt"></i>
+                                        </a>
+                                    </div>
                                 </td>
                             </tr>
                         @endforeach
@@ -56,11 +63,16 @@
                                 <td align="center"><i class="fab fa-angular fa-lg text-danger"></i> <strong>{{ $loop->iteration }}</strong></td>
                                 <td>{{ $kategori->nama }}</td>
                                 <td>
-                                    <form action="{{ route('kategoris.destroy', $kategori->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus peserta ini?');">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="dropdown-item"><i class="bx bx-trash me-1"></i> Delete</button>
-                                    </form>
+                                    <div class="d-flex">
+                                        <form action="{{ route('kategoris.destroy', $kategori->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus peserta ini?');">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="dropdown-item"><i class="bx bx-trash me-1"></i></button>
+                                        </form>
+                                        <a class="dropdown-item" href="{{ route('kategoris.edit', $kategori->id) }}">
+                                            <i class="bx bx-edit-alt"></i>
+                                        </a>
+                                    </div>
                                 </td>
                             </tr>
                         @endforeach

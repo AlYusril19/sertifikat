@@ -45,13 +45,13 @@
                         <div class="row mb-3">
                             <label class="col-sm-2 col-form-label" for="tanggal_masuk">Tanggal Masuk</label>
                             <div class="col-sm-10">
-                                <input type="date" class="form-control" id="tanggal_masuk" name="tanggal_masuk" value="{{ $peserta->tanggal_masuk }}" required>
+                                <input type="date" class="form-control" id="tanggal_masuk" name="tanggal_masuk" value="{{ \Carbon\Carbon::parse($peserta->tanggal_masuk)->format('Y-m-d') }}" required>
                             </div>
                         </div>
                         <div class="row mb-3">
                             <label class="col-sm-2 col-form-label" for="tanggal_keluar">Tanggal Keluar</label>
                             <div class="col-sm-10">
-                                <input type="date" class="form-control" id="tanggal_keluar" name="tanggal_keluar" value="{{ $peserta->tanggal_keluar }}" required>
+                                <input type="date" class="form-control" id="tanggal_keluar" name="tanggal_keluar" value="{{ \Carbon\Carbon::parse($peserta->tanggal_keluar)->format('Y-m-d') }}" required>
                             </div>
                         </div>
                         <div class="row mb-3">
