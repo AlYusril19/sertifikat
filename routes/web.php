@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\BerandaAdminController;
 use App\Http\Controllers\FileDokumenController;
+use App\Http\Controllers\KategoriController;
+use App\Http\Controllers\NilaiController;
 use App\Http\Controllers\PesertaController;
 use App\Http\Controllers\PublicPesertaController;
 use App\Http\Controllers\UserController;
@@ -47,6 +49,14 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/admin/users', [UserController::class, 'store'])->name('users.store');
     Route::get('/admin/users/index', [UserController::class, 'index'])->name('users.index');
     Route::delete('/admin/users/{id}', [UserController::class, 'destroy'])->name('users.destroy');
+
+    Route::get('/admin/kategoris/create', [KategoriController::class, 'create'])->name('kategoris.create');
+    Route::post('/admin/kategoris', [KategoriController::class, 'store'])->name('kategoris.store');
+    Route::get('/admin/kategoris/index', [KategoriController::class, 'index'])->name('kategoris.index');
+    Route::delete('/admin/kategoris/{id}', [KategoriController::class, 'destroy'])->name('kategoris.destroy');
+
+    Route::post('/admin/nilais', [NilaiController::class, 'store'])->name('nilais.store');
+    Route::delete('/admin/nilais/{id}', [NilaiController::class, 'destroy'])->name('nilais.destroy');
 });
 
 Route::get('/peserta/{id}', [PublicPesertaController::class, 'show'])->name('public.pesertas.show');

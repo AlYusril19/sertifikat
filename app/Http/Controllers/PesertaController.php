@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\FileDokumen;
+use App\Models\Kategori;
+use App\Models\Nilai;
 use App\Models\Peserta;
 use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 use GuzzleHttp\Client;
@@ -97,8 +99,30 @@ class PesertaController extends Controller
      */
     public function show(string $id)
     {
-        $peserta = Peserta::findOrFail($id);
-        return view('admin.show-peserta', compact('peserta'));
+        $peserta = Peserta::with('nilai.kategori')->findOrFail($id);
+        $kategoris = Kategori::all();
+        $nilai = Nilai::where('peserta_id', $peserta->id)->get();
+
+        // Filter nilai berdasarkan kategori utama
+        $akademis = $peserta->nilai->filter(function($nilai) {
+            return $nilai->kategori->kategori === 'Akademis';
+        });
+
+        $nonAkademis = $peserta->nilai->filter(function($nilai) {
+            return $nilai->kategori->kategori === 'Non-Akademis';
+        });
+
+        // Hitung Rata-rata Nilai Peserta
+        $totalNilai = $akademis->sum('nilai');
+        $jumlahKategori = $akademis->count();
+        $meanAkademis = $jumlahKategori > 0 ? $totalNilai / $jumlahKategori : 0;
+
+        $totalNilai = $nonAkademis->sum('nilai');
+        $jumlahKategori = $nonAkademis->count();
+        $meanNonAkademis = $jumlahKategori > 0 ? $totalNilai / $jumlahKategori : 0;
+
+        $rataRata = $meanAkademis && $meanNonAkademis > 0 ? ($meanAkademis + $meanNonAkademis) / 2 : 0;
+        return view('admin.show-peserta', compact('peserta', 'kategoris' , 'akademis', 'nonAkademis', 'nilai', 'meanAkademis', 'meanNonAkademis', 'rataRata'));
     }
 
     /**

@@ -130,7 +130,7 @@
                   </g>
                 </svg>
               </span>
-              <span class="app-brand-text demo menu-text fw-bolder ms-2">SkyTaMa</span>
+              <span class="app-brand-text demo menu-text fw-bolder ms-2">E-Sertifikat</span>
             </a>
 
             <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
@@ -147,7 +147,6 @@
                 <a href="{{ route('admin.dashboard') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
                 <div data-i18n="Analytics">Dashboard</div>
-                {{-- <span class="badge rounded-pill bg-danger ms-auto">{{ $jumlahPesertaTanpaDokumen }}</span> --}}
                 @if ($jumlahPesertaTanpaDokumen > 0)
                     <span class="badge rounded-pill bg-danger ms-auto">{{ $jumlahPesertaTanpaDokumen }}</span>
                 @endif
@@ -169,39 +168,36 @@
                   </a>
                 </li>
               </ul>
-
-              {{-- <ul class="menu-sub">
-                <li class="menu-item {{ \Route::is('pesertas.create') ? 'active' : '' }}">
-                  <a href="{{ route('pesertas.create') }}" class="menu-link">
-                    <div data-i18n="Without menu">Tambah Peserta</div>
-                  </a>
-                </li>
-              </ul> --}}
-
             </li>
 
             <li class="menu-item {{ \Route::is('file_dokumen.*') ? 'active open' : '' }}">
               <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons bx bx-book-content"></i>
+                <i class="menu-icon tf-icons bx bx-certification"></i>
                 <div data-i18n="Layouts">Sertifikat</div>
               </a>
 
               <ul class="menu-sub">
                 <li class="menu-item {{ \Route::is('file_dokumen.index') ? 'active' : '' }}">
                   <a href="{{ route('file_dokumen.index') }}" class="menu-link">
-                  {{-- <a href="layouts-without-menu.html" class="menu-link"> --}}
                     <div data-i18n="Without menu">Daftar Sertifikat</div>
                   </a>
                 </li>
               </ul>
+            </li>
 
-              {{-- <ul class="menu-sub">
-                <li class="menu-item {{ \Route::is('file_dokumen.create') ? 'active' : '' }}">
-                  <a href="{{ route('file_dokumen.create') }}" class="menu-link">
-                    <div data-i18n="Without menu">Tambah Sertifikat</div>
+            <li class="menu-item {{ \Route::is('kategoris.*') ? 'active open' : '' }}">
+              <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons bx bx-notepad"></i>
+                <div data-i18n="Layouts">Nilai</div>
+              </a>
+
+              <ul class="menu-sub">
+                <li class="menu-item {{ \Route::is('kategoris.index') ? 'active' : '' }}">
+                  <a href="{{ route('kategoris.index') }}" class="menu-link">
+                    <div data-i18n="Without menu">Daftar Kategori Nilai</div>
                   </a>
                 </li>
-              </ul> --}}
+              </ul>
             </li>
 
             <li class="menu-header small text-uppercase">
@@ -209,7 +205,7 @@
             </li>
             <li class="menu-item {{ \Route::is('users.*') ? 'active open' : '' }}">
               <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons bx bx-dock-top"></i>
+                <i class="menu-icon tf-icons bx bx-user"></i>
                 <div data-i18n="Account Settings">Akun Admin</div>
               </a>
               <ul class="menu-sub">
@@ -333,13 +329,8 @@
             <!-- Content -->
             <div class="container-xxl flex-grow-1 container-p-y">
               {{-- Allert Message --}}
-              <div class="alert alert-primary d-none" role="alert" id="alert-message">
-              </div>
 
               @if(session('success'))
-                  {{-- <div class="alert alert-success">
-                      {{ session('success') }}
-                  </div> --}}
                   <div class="alert alert-success alert-dismissible" role="alert">
                     {{ session('success') }}
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
@@ -348,9 +339,6 @@
               @endif
 
               @if(session('error'))
-                  {{-- <div class="alert alert-danger">
-                      {{ session('error') }}
-                  </div> --}}
                   <div class="alert alert-danger alert-dismissible" role="alert">
                     {{ session('error') }}
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">

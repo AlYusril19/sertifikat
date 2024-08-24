@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="row justify-content-center">
-    <div class="col-lg-12 mb-4 order-0">
+    <div class="col-lg-6 mb-4 order-0">
         <div class="card">
             {{-- <h5 class="card-header">Detail Sertifikat Peserta</h5> --}}
             <div class="card-header d-flex justify-content-between align-items-center">
@@ -63,7 +63,7 @@
                         </div>
                     @endif
                 </div>
-
+                {{-- @dd($peserta->id) --}}
                 <!-- Generate QR Code menggunakan Google Chart API -->
                 <div class="mt-4">
                     <div class="alert alert-dark" role="alert">
@@ -72,6 +72,137 @@
                             link qrcode
                         </a></strong>, dan bubuhkan ke sertifikat secara manual!
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-6 mb-4 order-0">
+        {{-- input Nilai --}}
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5>Kolom Input Nilai</h5>
+            </div>
+            <div class="card-body">
+                <form action="{{ route('nilais.store') }}" method="POST">
+                    @csrf
+
+                    <div class="form-group mb-3">
+                        <label for="peserta_id">Pilih Peserta</label>
+                        <select name="peserta_id" id="peserta_id" class="form-control">
+                            <option value="{{ $peserta->id }}">{{ $peserta->nama }}</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label for="kategori_id">Pilih Kategori</label>
+                        <select name="kategori_id" id="kategori_id" class="form-control">
+                            @foreach($kategoris as $kategori)
+                                @php
+                                    // Cek apakah kategori ini sudah memiliki nilai untuk peserta tertentu
+                                    $hasNilai = $nilai->contains(function ($item) use ($kategori) {
+                                        return $item->kategori_id == $kategori->id;
+                                    });
+                                @endphp
+                                
+                                @if(!$hasNilai)
+                                    <option value="{{ $kategori->id }}">{{ $kategori->nama }}</option>
+                                @endif
+                            @endforeach
+                        </select>
+                    </div>
+
+
+                    <div class="form-group mb-3">
+                        <label for="nilai">Nilai</label>
+                        <input type="number" name="nilai" id="nilai" class="form-control" required>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Simpan Nilai</button>
+                </form>
+            </div>
+        </div>
+
+        {{-- Tabel Nilai --}}
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5>List Nilai</h5>
+            </div>
+            <div class="card-body">
+                <div class="text-nowarp table-responsive">
+                    {{-- Tabel Akademis --}}
+                    <table class="table table-bordered mb-3">
+                        <caption class="ms-4">
+                            Kategori Nilai Akademis
+                        </caption>
+                        <thead>
+                            <tr align="center">
+                                <th width="7%">No</th>
+                                <th>Kategori</th>
+                                <th width="10%">Nilai</th>
+                                <th width="12%">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($akademis as $index => $nilai)
+                                <tr>
+                                    <td align="center"><i class="fab fa-angular fa-lg text-danger"></i> <strong>{{ $loop->iteration }}</strong></td>
+                                    <td>{{ $nilai->kategori->nama }}</td>
+                                    <td align="center">{{ $nilai->nilai }}</td>
+                                    <td>
+                                        <form action="{{ route('nilais.destroy', $nilai->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus peserta ini?');">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="dropdown-item"><i class="bx bx-trash me-1"></i> Delete</button>
+                                    </form>
+                                    </td>
+                                </tr>
+                            @endforeach
+                            <tr>
+                                <td colspan="2" align="right"><strong>Rata-Rata</strong></td>
+                                <td align="center"><strong>{{ number_format($meanAkademis, 2) }}</strong></td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    {{-- Tabel Non-Akademis --}}
+                    <table class="table table-bordered mb-3">
+                        <caption class="ms-4">
+                            Kategori Nilai Non-Akademis
+                        </caption>
+                        <thead>
+                            <tr align="center">
+                                <th width="7%">No</th>
+                                <th>Kategori</th>
+                                <th width="10%">Nilai</th>
+                                <th width="12%">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($nonAkademis as $index => $nilai)
+                                <tr>
+                                    <td align="center"><i class="fab fa-angular fa-lg text-danger"></i> <strong>{{ $loop->iteration }}</strong></td>
+                                    <td>{{ $nilai->kategori->nama }}</td>
+                                    <td align="center">{{ $nilai->nilai }}</td>
+                                    <td>
+                                        <form action="{{ route('nilais.destroy', $nilai->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus peserta ini?');">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="dropdown-item"><i class="bx bx-trash me-1"></i> Delete</button>
+                                    </form>
+                                    </td>
+                                </tr>
+                            @endforeach
+                            <tr>
+                                <td colspan="2" align="right"><strong>Rata-Rata</strong></td>
+                                <td align="center"><strong>{{ number_format($meanNonAkademis, 2) }}</strong></td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <p>Rata - rata Nilai Akademis dan Non-Akademis = {{ number_format($rataRata, 2) }}</p>
                 </div>
             </div>
         </div>

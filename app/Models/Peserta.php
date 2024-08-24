@@ -32,4 +32,9 @@ class Peserta extends Model
     {
         return $this->hasOne(FileDokumen::class, 'nomor_sertifikat', 'nomor_sertifikat');
     }
+
+    public function nilai()
+    {
+        return $this->hasMany(Nilai::class);
+    }
 }
