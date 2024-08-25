@@ -27,7 +27,7 @@
       content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
     />
 
-    <title>Under Maintenance - Pages</title>
+    <title>E-Sertifikat | {{ $peserta->nama }}</title>
 
     <meta name="description" content="" />
 
